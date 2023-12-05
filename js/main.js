@@ -38,8 +38,9 @@ function generateHtml(postsArr) {
 }
 
 function makeSinglePost(singlePostObj) {
-  const li = document.createElement("li");
-  li.innerHTML = `
+  const liEl = document.createElement("li");
+  const id = singlePostObj.id;
+  liEl.innerHTML = `
       <div class="card">
         <div class="card-body ">
           <h5 class="card-title">Post: ${singlePostObj.title}</h5>
@@ -53,7 +54,33 @@ function makeSinglePost(singlePostObj) {
           <a href="/single.html" class="btn btn-primary">
             Go somewhere
           </a>
-        </div>
-      </div>`;
-  return li;
+          <button type='button' class='btn btn-outline-danger'>Delete</button>
+          </div>
+        </div>`;
+
+  const delBtn = liEl.querySelector("button");
+  delBtn.addEventListener("click", () => {
+    sentDeleteFetch(id);
+    const grandGrandParent = delBtn.parentElement.parentElement.parentElement;
+    grandGrandParent.parentNode.removeChild(grandGrandParent);
+  });
+  return liEl;
+}
+
+async function sentDeleteFetch(idToDelete) {
+  const delUrl = `${postsUrl}/${idToDelete}`;
+  console.log("idToDlete ===", idToDelete);
+  try {
+    const result = await fetch(delUrl, {
+      method: "DELETE",
+    });
+    if (result.status === 200) {
+      console.log("pavyko");
+    } else {
+      console.log("nepavyko");
+    }
+    console.log("data ===", result);
+  } catch (err) {
+    console.log("err ===", err);
+  }
 }
