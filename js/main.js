@@ -5,20 +5,26 @@ const els = {
   postList: document.getElementById("post-list"),
 };
 
+const timestamp = 1701785456092;
+const date = new Date(timestamp);
+console.log(date.toString()); // Local time
+console.log(date.toUTCString()); // Coordinated Universal Time (UTC)
+
 const baseUrl = "http://localhost:5005";
 const postsUrl = `${baseUrl}/posts`;
 
 init();
 async function init() {
   const postData = await getAllPost();
-  const firstPost = postData[2];
   //   generateHtml(firstPost);
   generateHtml(postData);
 }
 
 async function getAllPost() {
   try {
+    console.log("postsUrl ===", postsUrl);
     const result = await fetch(postsUrl);
+    console.log("result ===", result);
     const data = await result.json();
     return data;
     // console.log(data);
@@ -30,6 +36,7 @@ async function getAllPost() {
 
 function generateHtml(postsArr) {
   console.log("postsArr ===", postsArr);
+  els.postList.innerHTML = "";
   const postElArr = postsArr.map((postObj) => {
     const htmlPosts = makeSinglePost(postObj);
     return htmlPosts;
@@ -51,7 +58,7 @@ function makeSinglePost(singlePostObj) {
           <p class="card-text">
             ${singlePostObj.body.slice(0, 75)}
           </p>
-          <a href="/single.html" class="btn btn-primary">
+          <a href="/single.html?id=${id}" class="btn btn-primary">
             Go somewhere
           </a>
           <button type='button' class='btn btn-outline-danger'>Delete</button>
