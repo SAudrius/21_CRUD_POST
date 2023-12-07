@@ -22,16 +22,6 @@ async function init() {
   addToSingleHtml(singlePost);
 }
 
-async function getSinglePost(url, userId) {
-  try {
-    const response = await fetch(`${url}/${userId}`);
-    const data = await response.json();
-    return data;
-  } catch (err) {
-    console.warn(err);
-  }
-}
-
 function addToSingleHtml(dataObj) {
   console.log("dataObj ===", dataObj);
   const divEl = document.querySelector("#output");

@@ -36,16 +36,6 @@ function getPageId() {
   return currentPostId;
 }
 
-async function getSinglePost(url, userId) {
-  try {
-    const response = await fetch(`${url}/${userId}`);
-    const data = await response.json();
-    return data;
-  } catch (err) {
-    console.warn(err);
-  }
-}
-
 function addToHtml(dataObj) {
   const date = new Date();
   const isoDate = date.toISOString().slice(0, 10);
