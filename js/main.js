@@ -7,17 +7,11 @@ const els = {
 
 const timestamp = 1701785456092;
 const date = new Date(timestamp);
-console.log(date.toString()); // Local time
-console.log(date.toUTCString()); // Coordinated Universal Time (UTC)
-
-const baseUrl = "http://localhost:5005";
-const postsUrl = `${baseUrl}/posts`;
 
 init();
 async function init() {
-  const postData = await getAllPost();
-  //   generateHtml(firstPost);
-  generateHtml(postData);
+  const postArr = await getAllPost();
+  generateHtml(postArr);
 }
 
 async function getAllPost() {

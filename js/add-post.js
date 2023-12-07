@@ -40,13 +40,28 @@ async function postData(obj) {
       body: JSON.stringify(obj),
     });
     console.log("response ===", response);
-    if (!response.ok) {
-      throw new Error(
-        `Somethink went wrong ${response.status},${response.message}`
-      );
+    if (response.ok) {
+      setTimeout(() => {
+        window.location.href = "/index.html";
+      }, 500);
+      return;
     }
     const data = await response.json();
+    console.log("data ===", data);
+    showError(data.error);
   } catch (err) {
     console.warn(err);
   }
+}
+
+function showError(dataArr) {
+  const ul = document.querySelector("#error-div");
+  ul.innerHTML = "";
+  const liArr = dataArr.map((obj) => {
+    const liEl = document.createElement("li");
+    console.log("obj.error ===", obj.message);
+    liEl.textContent = obj.message;
+    return liEl;
+  });
+  ul.append(...liArr);
 }

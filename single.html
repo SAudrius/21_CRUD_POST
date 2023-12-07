@@ -14,27 +14,31 @@
         defer></script>
     <!-- My css -->
     <link rel="stylesheet" href="style.css">
-    <script src="js/fetchNav.js" defer></script>
+    <script src="js/config.js" defer></script>
 
+    <script src="js/fetchNav.js" defer></script>
     <script src="js/single.js" defer></script>
 </head>
 
 <body>
     <div class="container mb-5 mt-2" id="output">
-        <img class="img-fluid" src="" alt="">
-        <h1>Single Post</h1>
-        <p class="lead">Author: James Bond</p>
-        <p class="fs2">Date: </p>
-        <p class="fs2">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam nostrum, consequatur
+        <img id="img" class="img-fluid" src="" alt="">
+        <h1 id="title"></h1>
+        <p class="lead">Author: <span id="author"></span></p>
+        <p class="fs2">Date: <span id="date"></span></p>
+        <p class="fs2" id="body">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam nostrum,
+            consequatur
             sapiente mollitia
             est quam!</p>
-        <ul class="unlisted">
-            <li class="badge rounded-pill text-bg-primary fs-5">HTML</li>
-            <li class="badge rounded-pill text-bg-primary fs-5">CSS</li>
-            <li class="badge rounded-pill text-bg-primary fs-5">JS</li>
+        <ul class="unlisted" id="tags">
+            <li class="badge rounded-pill text-bg-primary fs-5"></li>
+            <li class="badge rounded-pill text-bg-primary fs-5"></li>
+            <li class="badge rounded-pill text-bg-primary fs-5"></li>
         </ul>
-        <button class="btn btn-danger">Delete</button>
+        <button class="btn btn-danger" id="delete">Delete</button>
         <a href="/index.html" class="btn btn-secondary">go back</a>
+        <a id="editPostLink" href="edit-post.html" class="btn btn-info">Edit this post</a>
+
     </div>
 </body>
 
