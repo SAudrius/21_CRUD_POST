@@ -1,5 +1,4 @@
-"use strict";
-console.log("comments.js file was loaded");
+import { commentsUrl } from "./modules/config.js";
 const commentsEl = document.getElementById("comments");
 const comForm = document.getElementById("form-comments");
 

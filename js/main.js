@@ -1,6 +1,5 @@
-"use strict";
-console.log("main.js file was loaded");
-
+import { baseUrl, postsUrl } from "./modules/config.js";
+import fetchNav from "./modules/fetchNav.js";
 const els = {
   postList: document.getElementById("post-list"),
 };
@@ -10,6 +9,7 @@ const date = new Date(timestamp);
 
 init();
 async function init() {
+  fetchNav();
   const postArr = await getAllPost();
   generateHtml(postArr);
 }

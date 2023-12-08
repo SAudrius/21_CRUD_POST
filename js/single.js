@@ -1,32 +1,26 @@
-"use strict";
-console.log("single.js file was loaded");
+import fetchNav from "./modules/fetchNav.js";
+import { postsUrl } from "./modules/config.js";
+import getPageId from "./modules/urlId.js";
+import { getSinglePost } from "./modules/singleFn.js";
 
 const els = {
   bodyEl: document.querySelector("body"),
 };
-// get url id
-const queryString = window.location.search;
-console.log("queryString ===", queryString);
-const urlParams = new URLSearchParams(queryString);
-console.log("urlParams ===", urlParams);
-const currentPostId = urlParams.get("id");
-console.log("currentPostId ===", currentPostId);
 
-if (!currentPostId) {
-  console.log("noe post id");
-}
-
-init();
-async function init() {
+(async () => {
+  fetchNav();
+  const currentPostId = getPageId();
+  if (!currentPostId) {
+    console.log("noe post id");
+  }
   const singlePost = await getSinglePost(postsUrl, currentPostId);
-  addToSingleHtml(singlePost);
-}
+  addToSingleHtml(singlePost, currentPostId);
+})();
 
-function addToSingleHtml(dataObj) {
+function addToSingleHtml(dataObj, currentPostId) {
   console.log("dataObj ===", dataObj);
   const divEl = document.querySelector("#output");
   const liEls = createLiTags(dataObj.tags);
-  console.log("liEls ===", liEls);
   const img = divEl.querySelector("#img");
   const title = divEl.querySelector("#title");
   const author = divEl.querySelector("#author");
@@ -40,11 +34,9 @@ function addToSingleHtml(dataObj) {
   body.textContent = dataObj.body;
   tagsUl.innerHTML = liEls;
   editLink.href = `edit-post.html?id=${dataObj.id}`;
-  console.log("dataObj.image  ===", dataObj.image);
   createDeleteBtn(divEl, postsUrl, currentPostId);
 
   if (!dataObj.image) {
-    console.log("no image");
     img.classList.add("d-none");
     return;
   }
@@ -53,7 +45,6 @@ function addToSingleHtml(dataObj) {
 }
 
 function createLiTags(arr) {
-  console.log("arr ===", arr);
   const arrLiEl = arr.map((arrTags) => {
     return `<li class="badge rounded-pill text-bg-primary fs-5">${arrTags}</li>`;
   });

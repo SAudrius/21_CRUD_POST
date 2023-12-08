@@ -1,15 +1,16 @@
-"use strict";
-console.log("form.js file was loaded");
+import fetchNav from "./modules/fetchNav.js";
+import { postsUrl, baseUrl } from "./modules/config.js";
+import { showError } from "./modules/singleFn.js";
 
 const formEl = document.getElementById("form");
-const baseUrl = "http://localhost:5005";
-const postsUrl = `${baseUrl}/posts`;
+fetchNav();
 
 formEl.addEventListener("submit", (e) => {
   e.preventDefault();
   const target = e.target;
+  const posts = postsUrl;
   const postObj = collectData(target);
-  postData(postObj);
+  postData(postObj, posts);
 });
 
 function collectData(tar) {
@@ -32,7 +33,7 @@ function collectData(tar) {
   return postObj;
 }
 
-async function postData(obj) {
+async function postData(obj, postsUrl) {
   try {
     const response = await fetch(postsUrl, {
       method: "post",
@@ -52,16 +53,4 @@ async function postData(obj) {
   } catch (err) {
     console.warn(err);
   }
-}
-
-function showError(dataArr) {
-  const ul = document.querySelector("#error-div");
-  ul.innerHTML = "";
-  const liArr = dataArr.map((obj) => {
-    const liEl = document.createElement("li");
-    console.log("obj.error ===", obj.message);
-    liEl.textContent = obj.message;
-    return liEl;
-  });
-  ul.append(...liArr);
 }
