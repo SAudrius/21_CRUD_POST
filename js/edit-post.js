@@ -1,5 +1,8 @@
-"use strict";
-console.log("edit-post.js file was loaded");
+import fetchNav from "./modules/fetchNav.js";
+import { postsUrl, baseUrl } from "./modules/config.js";
+import getPageId from "./modules/urlId.js";
+import { getSinglePost } from "./modules/config.js";
+import { showError } from "./modules/singleFn.js";
 const form = document.getElementById("form");
 const els = {
   id: document.getElementById("id"),
@@ -11,12 +14,12 @@ const els = {
   date: document.getElementById("date"),
 };
 
-init();
-async function init() {
+(async () => {
+  fetchNav();
   const userId = getPageId();
   const postObj = await getSinglePost(postsUrl, userId);
   addToHtml(postObj);
-}
+})();
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -24,17 +27,6 @@ form.addEventListener("submit", (e) => {
   const newObj = eventCreateDataObj();
   putData(userId, newObj);
 });
-
-function getPageId() {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-  const currentPostId = urlParams.get("id");
-  if (!currentPostId) {
-    console.log("noe post id");
-    return;
-  }
-  return currentPostId;
-}
 
 function addToHtml(dataObj) {
   const date = new Date();
@@ -83,15 +75,4 @@ function putData(userId, dataObj) {
       showError(data.error);
     })
     .catch((err) => console.warn(err));
-}
-
-function showError(dataArr) {
-  const ul = document.querySelector("#error-div");
-  ul.innerHTML = "";
-  const liArr = dataArr.map((obj) => {
-    const liEl = document.createElement("li");
-    liEl.textContent = obj.message;
-    return liEl;
-  });
-  ul.append(...liArr);
 }
